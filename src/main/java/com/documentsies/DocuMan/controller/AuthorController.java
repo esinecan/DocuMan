@@ -2,6 +2,7 @@ package com.documentsies.DocuMan.controller;
 
 import com.documentsies.DocuMan.model.Author;
 import com.documentsies.DocuMan.service.AuthorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +19,28 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAllAuthors() {
-        return authorService.findAllAuthors();
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        List<Author> authors = authorService.findAllAuthors();
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
-        Author author = authorService.findAuthorById(id);
-        return ResponseEntity.ok(author);
+        return authorService.findAuthorById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping
-    public Author createAuthor(@RequestBody Author author) {
-        return authorService.saveAuthor(author);
+    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+        Author savedAuthor = authorService.saveAuthor(author);
+        return ResponseEntity.ok(savedAuthor);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author) {
+        Author updatedAuthor = authorService.updateAuthor(id, author);
+        return ResponseEntity.ok(updatedAuthor);
     }
 
     @DeleteMapping("/{id}")

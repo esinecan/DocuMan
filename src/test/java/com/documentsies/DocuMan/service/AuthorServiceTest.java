@@ -39,7 +39,7 @@ class AuthorServiceTest {
 
         List<Author> result = authorService.findAllAuthors();
         assertEquals(1, result.size());
-        assertEquals("John", result.get(0).getFirstName());
+        assertAuthorDetails(result.get(0));
     }
 
     @Test
@@ -48,23 +48,24 @@ class AuthorServiceTest {
 
         Author savedAuthor = authorService.saveAuthor(author);
         assertNotNull(savedAuthor);
-        assertEquals("John", savedAuthor.getFirstName());
+        assertAuthorDetails(savedAuthor);
     }
 
     @Test
     void testFindAuthorById_Success() {
         when(authorRepository.findById(anyLong())).thenReturn(Optional.of(author));
 
-        Author foundAuthor = authorService.findAuthorById(1L);
-        assertNotNull(foundAuthor);
-        assertEquals("John", foundAuthor.getFirstName());
+        Optional<Author> foundAuthor = authorService.findAuthorById(1L);
+        assertTrue(foundAuthor.isPresent());
+        assertAuthorDetails(foundAuthor.get());
     }
 
     @Test
     void testFindAuthorById_NotFound() {
         when(authorRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> authorService.findAuthorById(1L));
+        Optional<Author> foundAuthor = authorService.findAuthorById(1L);
+        assertFalse(foundAuthor.isPresent());
     }
 
     @Test
@@ -81,5 +82,11 @@ class AuthorServiceTest {
         when(authorRepository.existsById(anyLong())).thenReturn(false);
 
         assertThrows(ResourceNotFoundException.class, () -> authorService.deleteAuthor(1L));
+    }
+
+    // Helper method to check author details
+    private void assertAuthorDetails(Author author) {
+        assertEquals("John", author.getFirstName());
+        assertEquals("Doe", author.getLastName());
     }
 }

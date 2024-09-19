@@ -6,6 +6,7 @@ import com.documentsies.DocuMan.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorService {
@@ -20,19 +21,28 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
+    public Optional<Author> findAuthorById(Long id) {
+        return authorRepository.findById(id);
+    }
+
     public Author saveAuthor(Author author) {
         return authorRepository.save(author);
     }
 
-    public Author findAuthorById(Long id) {
-        return authorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + id));
-    }
-
     public void deleteAuthor(Long id) {
         if (!authorRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Author not found with id: " + id);
+            ResourceNotFoundException ex = new ResourceNotFoundException("Author not found with id: " + id);
+            System.out.println("Exception occurred: " + ex.getMessage());
+            throw ex;
         }
         authorRepository.deleteById(id);
+    }
+
+    public Author updateAuthor(Long id, Author updatedAuthor) {
+        Author existingAuthor = authorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + id));
+        existingAuthor.setFirstName(updatedAuthor.getFirstName());
+        existingAuthor.setLastName(updatedAuthor.getLastName());
+        return authorRepository.save(existingAuthor);
     }
 }
