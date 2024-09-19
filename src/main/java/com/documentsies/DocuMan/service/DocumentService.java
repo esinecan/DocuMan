@@ -1,5 +1,6 @@
 package com.documentsies.DocuMan.service;
 
+import com.documentsies.DocuMan.exception.ResourceNotFoundException;
 import com.documentsies.DocuMan.model.Document;
 import com.documentsies.DocuMan.repository.DocumentRepository;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,14 @@ public class DocumentService {
     }
 
     public Document findDocumentById(Long id) {
-        return documentRepository.findById(id).orElseThrow(() -> new RuntimeException("Document not found"));
+        return documentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found with id: " + id));
     }
 
     public void deleteDocument(Long id) {
+        if (!documentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Document not found with id: " + id);
+        }
         documentRepository.deleteById(id);
     }
 }
