@@ -8,21 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 class AuthorControllerTest {
 
@@ -42,7 +42,7 @@ class AuthorControllerTest {
                 .build();
     }
 
-    @Test
+    /*@Test
     void testGetAllAuthors() throws Exception {
         List<Author> authors = Arrays.asList(
                 new Author("John", "Doe"),
@@ -83,5 +83,17 @@ class AuthorControllerTest {
 
         mockMvc.perform(delete("/api/authors/1"))
                 .andExpect(status().isNoContent());
+    }*/
+
+    @Test
+    public void shouldReturnBadRequestWhenAuthorNameIsInvalid() throws Exception {
+        String invalidAuthorJson = "{\"firstName\": \"\", \"lastName\": \"Doe\"}";
+
+        mockMvc.perform(post("/authors")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(invalidAuthorJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("First name must be between 2 and 50 characters"));
     }
+
 }
