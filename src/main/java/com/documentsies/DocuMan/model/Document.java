@@ -1,7 +1,10 @@
 package com.documentsies.DocuMan.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 /**
@@ -18,11 +21,12 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // Immutable field
 
-    @NotNull
+    @NotBlank(message = "Title cannot be empty")
+    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
-    @NotNull
-    @Lob
+    @NotBlank(message = "Body cannot be empty")
+    @Size(min = 10, message = "Body must have at least 10 characters")
     private String body;
 
     @ManyToOne

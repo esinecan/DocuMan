@@ -2,8 +2,10 @@ package com.documentsies.DocuMan.controller;
 
 import com.documentsies.DocuMan.model.Document;
 import com.documentsies.DocuMan.service.DocumentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,14 +33,20 @@ public class DocumentController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping
-    public ResponseEntity<Document> createDocument(@RequestBody Document document) {
+    @PostMapping("/add")
+    public ResponseEntity<Object> createDocument(@Valid @RequestBody Document document, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
+        }
         Document savedDocument = documentService.saveDocument(document);
         return ResponseEntity.ok(savedDocument);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Document> updateDocument(@PathVariable Long id, @RequestBody Document document) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateDocument(@PathVariable Long id, @Valid @RequestBody Document document, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
+        }
         Document updatedDocument = documentService.updateDocument(id, document);
         return ResponseEntity.ok(updatedDocument);
     }

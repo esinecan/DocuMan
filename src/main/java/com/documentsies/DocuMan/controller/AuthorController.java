@@ -2,8 +2,10 @@ package com.documentsies.DocuMan.controller;
 
 import com.documentsies.DocuMan.model.Author;
 import com.documentsies.DocuMan.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,14 +33,20 @@ public class AuthorController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+    @PostMapping("/add")
+    public ResponseEntity<Object> createAuthor(@Valid @RequestBody Author author, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
+        }
         Author savedAuthor = authorService.saveAuthor(author);
         return ResponseEntity.ok(savedAuthor);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateAuthor(@PathVariable Long id, @Valid @RequestBody Author author, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
+        }
         Author updatedAuthor = authorService.updateAuthor(id, author);
         return ResponseEntity.ok(updatedAuthor);
     }
