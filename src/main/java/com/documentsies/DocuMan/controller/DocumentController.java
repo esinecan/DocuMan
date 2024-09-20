@@ -28,8 +28,7 @@ public class DocumentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Document> getDocumentById(@PathVariable Long id) {
-        return documentService.findDocumentById(id)
-                .map(ResponseEntity::ok)
+        return documentService.findDocumentById(id).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
@@ -43,7 +42,8 @@ public class DocumentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateDocument(@PathVariable Long id, @Valid @RequestBody Document document, BindingResult bindingResult) {
+    public ResponseEntity<Object> updateDocument(@PathVariable Long id, @Valid @RequestBody Document document,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
         }
@@ -53,12 +53,10 @@ public class DocumentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteDocument(@PathVariable Long id) {
-        return documentService.findDocumentById(id)
-                .map(document -> {
-                    documentService.deleteDocument(id);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return documentService.findDocumentById(id).map(document -> {
+            documentService.deleteDocument(id);
+            return ResponseEntity.noContent().build();
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
 }

@@ -11,16 +11,15 @@ import java.util.ArrayList;
 /**
  * Entity representing an Author.
  * <p>
- * The {@code id} field is immutable and managed by the database,
- * while other fields such as {@code firstName}, {@code lastName},
- * and {@code documents} are mutable for flexibility in handling data updates.
+ * The {@code id} field is immutable and managed by the database, while other fields such as {@code firstName},
+ * {@code lastName}, and {@code documents} are mutable for flexibility in handling data updates.
  */
 @Entity
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Immutable field
+    private Long id; // Immutable field
 
     @NotBlank(message = "First name cannot be empty")
     @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
@@ -35,8 +34,11 @@ public class Author {
 
     /**
      * Constructor for creating a new Author with required fields.
-     * @param firstName Author's first name.
-     * @param lastName Author's last name.
+     * 
+     * @param firstName
+     *            Author's first name.
+     * @param lastName
+     *            Author's last name.
      */
     public Author(String firstName, String lastName) {
         this.firstName = firstName;
@@ -44,7 +46,8 @@ public class Author {
     }
 
     // Empty constructor needed by JPA
-    protected Author() {}
+    protected Author() {
+    }
 
     /** @return The immutable ID of the Author. */
     public Long getId() {
