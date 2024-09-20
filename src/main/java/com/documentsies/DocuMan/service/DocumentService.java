@@ -1,12 +1,11 @@
 package com.documentsies.DocuMan.service;
 
+import com.documentsies.DocuMan.exception.ResourceNotFoundException;
 import com.documentsies.DocuMan.model.Document;
 import com.documentsies.DocuMan.repository.DocumentRepository;
-import com.documentsies.DocuMan.exception.ResourceNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DocumentService {
@@ -31,10 +30,9 @@ public class DocumentService {
 
     public void deleteDocument(Long id) {
         boolean exists = documentRepository.existsById(id);
-        System.out.println("Document exists: " + exists);  // Add logging
+        System.out.println("Document exists: " + exists); // Add logging
         if (!exists) {
             ResourceNotFoundException ex = new ResourceNotFoundException("Document not found with id: " + id);
-            System.out.println("Exception occurred: " + ex.getMessage());
             throw ex;
         }
         documentRepository.deleteById(id);

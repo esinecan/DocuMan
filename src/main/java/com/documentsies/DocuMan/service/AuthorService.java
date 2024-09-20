@@ -3,10 +3,9 @@ package com.documentsies.DocuMan.service;
 import com.documentsies.DocuMan.exception.ResourceNotFoundException;
 import com.documentsies.DocuMan.model.Author;
 import com.documentsies.DocuMan.repository.AuthorRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorService {
@@ -32,7 +31,6 @@ public class AuthorService {
     public void deleteAuthor(Long id) {
         if (!authorRepository.existsById(id)) {
             ResourceNotFoundException ex = new ResourceNotFoundException("Author not found with id: " + id);
-            System.out.println("Exception occurred: " + ex.getMessage());
             throw ex;
         }
         authorRepository.deleteById(id);

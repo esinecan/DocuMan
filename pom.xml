@@ -86,6 +86,24 @@
 					<target>17</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+					<groupId>net.revelc.code.formatter</groupId>
+					<artifactId>formatter-maven-plugin</artifactId>
+					<version>2.15.0</version>
+					<configuration>
+							<configFile>${basedir}/src/main/resources/eclipse_formatter.xml</configFile>
+							<removeUnusedImports>true</removeUnusedImports>
+					</configuration>
+					<executions>
+							<execution>
+									<goals>
+											<goal>format</goal>
+									</goals>
+									<phase>validate</phase>
+							</execution>
+					</executions>
+			</plugin>
 		</plugins>
 	</build>
 

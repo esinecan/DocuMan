@@ -10,16 +10,15 @@ import java.util.List;
 /**
  * Entity representing a Document.
  * <p>
- * The {@code id} field is immutable and managed by the database,
- * while other fields such as {@code title}, {@code body}, and
- * {@code references} are mutable to allow flexibility in data updates.
+ * The {@code id} field is immutable and managed by the database, while other fields such as {@code title},
+ * {@code body}, and {@code references} are mutable to allow flexibility in data updates.
  */
 @Entity
 public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Immutable field
+    private Long id; // Immutable field
 
     @NotBlank(message = "Title cannot be empty")
     @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
@@ -38,10 +37,15 @@ public class Document {
 
     /**
      * Constructor for creating a new Document with required fields.
-     * @param title The title of the document.
-     * @param body The body text of the document.
-     * @param author The author of the document.
-     * @param references A list of references for the document.
+     * 
+     * @param title
+     *            The title of the document.
+     * @param body
+     *            The body text of the document.
+     * @param author
+     *            The author of the document.
+     * @param references
+     *            A list of references for the document.
      */
     public Document(String title, String body, Author author, List<String> references) {
         this.title = title;
@@ -51,7 +55,8 @@ public class Document {
     }
 
     // Empty constructor needed by JPA
-    protected Document() {}
+    protected Document() {
+    }
 
     /** @return The immutable ID of the Document. */
     public Long getId() {

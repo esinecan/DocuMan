@@ -28,8 +28,7 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
-        return authorService.findAuthorById(id)
-                .map(ResponseEntity::ok)
+        return authorService.findAuthorById(id).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
@@ -43,7 +42,8 @@ public class AuthorController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateAuthor(@PathVariable Long id, @Valid @RequestBody Author author, BindingResult bindingResult) {
+    public ResponseEntity<Object> updateAuthor(@PathVariable Long id, @Valid @RequestBody Author author,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
         }
