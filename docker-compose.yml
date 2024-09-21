@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  documan:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - documan-network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - ./logs:/app/logs
+
+networks:
+  documan-network:
+    driver: bridge
