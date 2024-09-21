@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  documan:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - documan-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/documandb
+      SPRING_DATASOURCE_USERNAME: documanuser
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: documandb
+      POSTGRES_USER: documanuser
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      - documan-network
+
+networks:
+  documan-network:
+    driver: bridge
