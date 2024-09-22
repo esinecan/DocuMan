@@ -111,7 +111,6 @@ mvn test
 ```
 
 ```
-
 ### Explanation of Key Sections:
 
 - **Features**: Highlights the main features of the project.
