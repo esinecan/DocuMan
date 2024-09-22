@@ -1,5 +1,7 @@
 package com.documentsies.DocuMan.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,17 +16,21 @@ import java.util.ArrayList;
  * The {@code id} field is immutable and managed by the database, while other fields such as {@code firstName},
  * {@code lastName}, and {@code documents} are mutable for flexibility in handling data updates.
  */
+@Schema(description = "Entity representing an author of documents")
 @Entity
 public class Author {
 
+    @Schema(description = "Unique identifier of the author", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Immutable field
 
+    @Schema(description = "First name of the author", example = "John")
     @NotBlank(message = "First name cannot be empty")
     @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     private String firstName;
 
+    @Schema(description = "Last name of the author", example = "Doe")
     @NotBlank(message = "Last name cannot be empty")
     @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
