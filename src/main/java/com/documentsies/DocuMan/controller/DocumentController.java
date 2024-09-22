@@ -45,7 +45,7 @@ public class DocumentController {
     @Operation(summary = "Add a new document", description = "Create a new document in the system.")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Successfully created the new document"),
             @ApiResponse(responseCode = "400", description = "Invalid input data")})
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Object> createDocument(@Valid @RequestBody Document document, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
@@ -57,7 +57,7 @@ public class DocumentController {
     @Operation(summary = "Update a document", description = "Update the details of an existing document by its ID.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully updated the document"),
             @ApiResponse(responseCode = "404", description = "Document not found")})
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateDocument(@PathVariable Long id, @Valid @RequestBody Document document,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

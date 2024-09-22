@@ -90,7 +90,7 @@ class DocumentControllerTest {
         String invalidDocumentJson = "{\"title\": \"\", \"body\": \"Valid Body\"}";
         MvcResult result = mockMvc
                 .perform(
-                        post("/api/documents/add").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -100,7 +100,7 @@ class DocumentControllerTest {
         String invalidDocumentJson = "{\"title\": \"Valid Title\", \"body\": \"\"}";
         MvcResult result = mockMvc
                 .perform(
-                        post("/api/documents/add").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -109,7 +109,7 @@ class DocumentControllerTest {
     public void shouldReturnOkWhenDocumentDataIsValid() throws Exception {
         String validDocumentJson = "{\"title\": \"Valid Title\", \"body\": \"Valid Body\"}";
         MvcResult result = mockMvc
-                .perform(post("/api/documents/add").contentType(MediaType.APPLICATION_JSON).content(validDocumentJson))
+                .perform(post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(validDocumentJson))
                 .andExpect(status().isOk()).andReturn();
         printResponse(result);
     }
@@ -119,7 +119,7 @@ class DocumentControllerTest {
         String invalidDocumentJson = "{\"title\": \"\", \"body\": \"\"}";
         MvcResult result = mockMvc
                 .perform(
-                        post("/api/documents/add").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }

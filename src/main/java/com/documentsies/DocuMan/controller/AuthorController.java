@@ -45,7 +45,7 @@ public class AuthorController {
     @Operation(summary = "Add a new author", description = "Create a new author in the system.")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Successfully created the new author"),
             @ApiResponse(responseCode = "400", description = "Invalid input data")})
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Object> createAuthor(@Valid @RequestBody Author author, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getFieldError().getDefaultMessage());
@@ -57,7 +57,7 @@ public class AuthorController {
     @Operation(summary = "Update an author", description = "Update the details of an existing author by their ID.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully updated the author"),
             @ApiResponse(responseCode = "404", description = "Author not found")})
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateAuthor(@PathVariable Long id, @Valid @RequestBody Author author,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

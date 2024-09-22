@@ -82,7 +82,7 @@ class AuthorControllerTest {
     public void shouldReturnBadRequestWhenAuthorNameIsInvalid() throws Exception {
         String invalidAuthorJson = "{\"firstName\": \"\", \"lastName\": \"Doe\"}";
         MvcResult result = mockMvc
-                .perform(post("/api/authors/add").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
+                .perform(post("/api/authors").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -90,7 +90,7 @@ class AuthorControllerTest {
     public void shouldReturnBadRequestWhenAuthorLastNameIsInvalid() throws Exception {
         String invalidAuthorJson = "{\"firstName\": \"John\", \"lastName\": \"\"}";
         MvcResult result = mockMvc
-                .perform(post("/api/authors/add").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
+                .perform(post("/api/authors").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -98,7 +98,7 @@ class AuthorControllerTest {
     public void shouldReturnOkWhenAuthorDataIsValid() throws Exception {
         String validAuthorJson = "{\"firstName\": \"John\", \"lastName\": \"Doe\"}";
         MvcResult result = mockMvc
-                .perform(post("/api/authors/add").contentType(MediaType.APPLICATION_JSON).content(validAuthorJson))
+                .perform(post("/api/authors").contentType(MediaType.APPLICATION_JSON).content(validAuthorJson))
                 .andExpect(status().isOk()).andReturn();
         printResponse(result);
     }
@@ -106,7 +106,7 @@ class AuthorControllerTest {
     public void shouldReturnBadRequestWhenBothNamesAreInvalid() throws Exception {
         String invalidAuthorJson = "{\"firstName\": \"\", \"lastName\": \"\"}";
         MvcResult result = mockMvc
-                .perform(post("/api/authors/add").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
+                .perform(post("/api/authors").contentType(MediaType.APPLICATION_JSON).content(invalidAuthorJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
