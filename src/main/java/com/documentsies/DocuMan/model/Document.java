@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 /**
@@ -13,25 +14,31 @@ import java.util.List;
  * The {@code id} field is immutable and managed by the database, while other fields such as {@code title},
  * {@code body}, and {@code references} are mutable to allow flexibility in data updates.
  */
+@Schema(description = "Entity representing a document with its metadata")
 @Entity
 public class Document {
 
+    @Schema(description = "Unique identifier of the document", example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Immutable field
 
+    @Schema(description = "Title of the document", example = "Spring Boot Guide")
     @NotBlank(message = "Title cannot be empty")
     @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
+    @Schema(description = "Content body of the document", example = "This is a comprehensive guide on Spring Boot.")
     @NotBlank(message = "Body cannot be empty")
     @Size(min = 10, message = "Body must have at least 10 characters")
     private String body;
 
+    @Schema(description = "Author associated with the document")
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @Schema(description = "List of references for the document", example = "[\"reference1\", \"reference2\"]")
     @ElementCollection
     private List<String> references;
 
