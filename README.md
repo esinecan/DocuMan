@@ -1,4 +1,3 @@
-```markdown
 # DocuMan
 
 **DocuMan** is a Spring Boot-based REST API for managing documents and authors. The project includes CRUD operations for managing documents, authors, and other related entities. It also includes integrated Swagger documentation for easy API exploration.
@@ -106,4 +105,6 @@ To run the tests:
 
 ```bash
 mvn test
+```
+
 ```
