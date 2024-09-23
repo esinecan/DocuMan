@@ -2,6 +2,8 @@
 
 **DocuMan** is a Spring Boot-based REST API for managing documents and authors. The project includes CRUD operations for managing documents, authors, and other related entities. It also includes integrated Swagger documentation for easy API exploration.
 
+**Note:** The messaging functionality, which involves using a message queue system (e.g., RabbitMQ) to publish changes to authors and documents, has been implemented. However, due to time constraints, it has not been fully tested. You can find the implementation on the `feature/messaging` branch of the repository for further exploration and testing.
+
 ## Features
 
 - **CRUD operations** for documents and authors.
