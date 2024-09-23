@@ -107,5 +107,3 @@ To run the tests:
 ```bash
 mvn test
 ```
-
-```
