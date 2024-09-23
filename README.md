@@ -1,5 +1,3 @@
-Here’s a `README.md` template you can copy and paste into your project. It contains all the necessary sections and detailed descriptions of your project's functionality, setup, and usage.
-
 ```markdown
 # DocuMan
 
