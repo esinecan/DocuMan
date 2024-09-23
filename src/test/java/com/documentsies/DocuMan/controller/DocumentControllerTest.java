@@ -89,8 +89,7 @@ class DocumentControllerTest {
     public void shouldReturnBadRequestWhenDocumentTitleIsInvalid() throws Exception {
         String invalidDocumentJson = "{\"title\": \"\", \"body\": \"Valid Body\"}";
         MvcResult result = mockMvc
-                .perform(
-                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                .perform(post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -99,8 +98,7 @@ class DocumentControllerTest {
     public void shouldReturnBadRequestWhenDocumentBodyIsInvalid() throws Exception {
         String invalidDocumentJson = "{\"title\": \"Valid Title\", \"body\": \"\"}";
         MvcResult result = mockMvc
-                .perform(
-                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                .perform(post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }
@@ -118,8 +116,7 @@ class DocumentControllerTest {
     public void shouldReturnBadRequestWhenBothFieldsAreInvalid() throws Exception {
         String invalidDocumentJson = "{\"title\": \"\", \"body\": \"\"}";
         MvcResult result = mockMvc
-                .perform(
-                        post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
+                .perform(post("/api/documents").contentType(MediaType.APPLICATION_JSON).content(invalidDocumentJson))
                 .andExpect(status().isBadRequest()).andReturn();
         printResponse(result);
     }

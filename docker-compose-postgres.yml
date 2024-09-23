@@ -15,12 +15,12 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
       - db
+      - rabbitmq
     volumes:
       - ./logs:/app/logs
 
   db:
     image: postgres:15
-    restart: always
     environment:
       POSTGRES_DB: documandb
       POSTGRES_USER: documanuser
@@ -29,6 +29,20 @@ services:
       - "5432:5432"
     networks:
       - documan-network
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - documan-network
+    restart: unless-stopped
 
 networks:
   documan-network:
