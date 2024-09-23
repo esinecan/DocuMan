@@ -1,5 +1,6 @@
 package com.documentsies.DocuMan.controller;
 
+import com.documentsies.DocuMan.messaging.MessageSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/authors")
 public class AuthorController {
 
+    private final MessageSender messageSender;
     private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
@@ -74,5 +76,15 @@ public class AuthorController {
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         authorService.deleteAuthor(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Delete all documents by author ID using RabbitMQ")
+    @ApiResponse(responseCode = "200", description = "Documents deletion requested successfully")
+    @ApiResponse(responseCode = "404", description = "Author not found")
+    @DeleteMapping("/{id}/documents/delete")
+    public ResponseEntity<String> deleteDocumentsByAuthor(@PathVariable Long id) {
+        // Send the author ID to the RabbitMQ queue to trigger document deletion
+        messageSender.sendAuthorDeletionMessage(id);
+        return ResponseEntity.ok("Documents deletion for author " + id + " has been requested.");
     }
 }
