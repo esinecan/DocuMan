@@ -109,16 +109,3 @@ mvn test
 ```
 
 ```
-### Explanation of Key Sections:
-
-- **Features**: Highlights the main features of the project.
-- **Technologies**: Lists the tools and frameworks used in the project.
-- **Installation**: Explains how to set up and run the project locally.
-- **API Documentation**: Provides details on how to access the Swagger UI for exploring the API.
-- **API Endpoints**: Lists all the main endpoints for managing authors and documents.
-- **Exception Handling**: Describes the error-handling strategy used in the project.
-- **Testing**: Instructions for running unit tests.
-- **Contributing**: Guidelines on how to contribute to the project.
-- **License**: Information about the project license.
-
-Feel free to replace placeholders such as the email in the contact section with your actual details.
